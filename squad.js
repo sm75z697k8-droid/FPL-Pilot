@@ -41,14 +41,23 @@
   }
 
   function createPlayer(player) {
+    // Decorative kits represent positions, not claimed real club kit designs.
+    // All manager/player data remains text-only and comes from verified FPL picks.
     const card = document.createElement("div");
     card.className = "squad-player";
+
+    const visual = document.createElement("span");
+    visual.className = "player-visual";
+    visual.setAttribute("aria-hidden", "true");
 
     const shirt = document.createElement("span");
     shirt.className = "player-kit";
     shirt.dataset.position = player.role;
-    shirt.setAttribute("aria-hidden", "true");
     shirt.textContent = player.role;
+    visual.append(shirt);
+
+    const label = document.createElement("span");
+    label.className = "player-caption";
 
     const name = document.createElement("span");
     name.className = "player-name";
@@ -58,14 +67,20 @@
     club.className = "player-club";
     club.textContent = `${player.club} · ${player.role}`;
 
-    card.append(shirt, name, club);
+    label.append(name, club);
     if (player.captain || player.vice_captain) {
-      const captain = document.createElement("span");
-      captain.className = "player-armband";
-      if (player.vice_captain) captain.dataset.kind = "vice";
-      captain.textContent = player.captain ? "CAPTAIN" : "VICE";
-      card.append(captain);
+      const badge = document.createElement("span");
+      badge.className = "player-armband";
+      badge.dataset.kind = player.captain ? "captain" : "vice";
+      badge.textContent = player.captain ? "C" : "VC";
+      visual.append(badge);
+
+      const description = document.createElement("span");
+      description.className = "player-visually-hidden";
+      description.textContent = player.captain ? "Captain" : "Vice captain";
+      label.append(description);
     }
+    card.append(visual, label);
     return card;
   }
 
@@ -199,7 +214,7 @@
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { parseTeamId, validateSquad };
+    module.exports = { parseTeamId, validateSquad, createPlayer, renderStarting, renderBench };
   }
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", init);
 })();
