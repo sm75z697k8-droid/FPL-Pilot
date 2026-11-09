@@ -124,6 +124,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 .roadmap-intro { min-width: 0; }
 .roadmap-intro h2 { max-width: 630px; }
 .roadmap-intro p { max-width: 475px; margin: 1.35rem 0 0; color: #a9bbbe; line-height: 1.75; font-size: clamp(.94rem, 1.15vw, 1.05rem); }
+.squad-entry-link { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; margin-top: 1.25rem; border-bottom: 1px solid rgba(213,242,139,.5); padding: .55rem 0; color: var(--accent); font-size: .83rem; font-weight: 750; }
+.squad-entry-link:hover { border-color: var(--accent); }
+.squad-entry-link span { font-size: 1rem; }
 .roadmap-milestone { display: flex; flex-direction: column; gap: clamp(1.9rem, 3.4vw, 3rem); min-width: 0; padding: clamp(1.4rem, 2.5vw, 2.25rem); border: 1px solid rgba(213,242,139,.22); border-radius: 7px; background: #192a32; }
 .milestone-header, .milestone-footer { display: flex; align-items: center; justify-content: space-between; gap: .9rem; }
 .milestone-number { color: var(--accent); font-size: .66rem; font-weight: 790; letter-spacing: .1em; }
