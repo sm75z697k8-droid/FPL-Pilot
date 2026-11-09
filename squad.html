@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101820">
+  <meta name="description" content="View your published Fantasy Premier League squad by Team ID. Real players and positions, with no predictions or invented data.">
+  <title>Squad Intelligence — FPLPilot</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="squad.css">
+  <script src="squad.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell" id="top">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="./" aria-label="FPLPilot — back to homepage">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none" focusable="false">
+              <path d="M9 8.5h18v19H9z" stroke="currentColor" stroke-width="1.6" opacity=".64"/>
+              <path d="M9 18h18M18 8.5v7M13 27.5v-4.5h10v4.5" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+              <path d="m13 19 4 4 7-9" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="brand-word">fplpilot<span class="brand-period">.</span></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="./">Home</a>
+          <a href="./#roadmap">Gameweek overview</a>
+          <a href="squad.html" aria-current="page">Squad intelligence</a>
+        </nav>
+        <a class="header-link" href="./">Back to homepage <span aria-hidden="true">↗</span></a>
+        <details class="mobile-nav">
+          <summary aria-label="Open navigation menu">
+            <span class="menu-lines" aria-hidden="true"><span></span><span></span></span>
+          </summary>
+          <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+            <a href="./">Home</a>
+            <a href="./#roadmap">Gameweek overview</a>
+            <a href="squad.html" aria-current="page">Squad intelligence</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="squad-lead container" aria-labelledby="squad-title">
+        <div class="squad-lead-copy">
+          <div class="eyebrow"><span class="signal-dot" aria-hidden="true"></span> FPLPILOT / SQUAD INTELLIGENCE <span class="eyebrow-index">/ 003</span></div>
+          <h1 id="squad-title">Your team.<br><em>In full view.</em></h1>
+          <p>See your latest publicly published FPL lineup — exactly as recorded after a gameweek deadline. No projections, no invented players.</p>
+        </div>
+        <div class="squad-search">
+          <form id="squad-form" novalidate>
+            <label for="team-id">YOUR FPL TEAM ID</label>
+            <div class="squad-form-row">
+              <input type="text" id="team-id" name="team" inputmode="numeric" autocomplete="off" maxlength="9" spellcheck="false" placeholder="e.g. 1234567" required aria-describedby="team-id-help">
+              <button type="submit" id="squad-submit">View squad <span aria-hidden="true">↗</span></button>
+            </div>
+            <p id="team-id-help">Find your ID in the official FPL Points page URL: <code>…/entry/1234567/event/10</code></p>
+          </form>
+          <div class="squad-privacy"><span aria-hidden="true">◎</span><span>Read-only public data. No FPL login, password, or account connection required.</span></div>
+        </div>
+      </section>
+
+      <section class="squad-results-section" aria-labelledby="results-title">
+        <div class="container">
+          <div class="squad-results-heading">
+            <div>
+              <span class="section-index">01 / THE SQUAD DESK</span>
+              <h2 id="results-title">Published squad <em>overview.</em></h2>
+            </div>
+            <span class="squad-results-tag" id="squad-state">READY TO SEARCH</span>
+          </div>
+
+          <div class="squad-message" id="squad-message" role="status" aria-live="polite">
+            Enter your Team ID above to view your last publicly published gameweek lineup.
+          </div>
+
+          <div class="squad-data" id="squad-data" hidden>
+            <div class="squad-summary">
+              <div class="squad-summary-name">
+                <span class="summary-overline">MANAGER'S TEAM</span>
+                <h3 id="squad-team-name">—</h3>
+                <span class="squad-summary-sub" id="squad-team-reference">—</span>
+              </div>
+              <div class="squad-summary-gw">
+                <span class="summary-overline">PUBLISHED GAMEWEEK</span>
+                <strong id="squad-gameweek">—</strong>
+              </div>
+            </div>
+            <div class="squad-roster">
+              <div class="squad-roster-head"><div><span class="squad-head-line" aria-hidden="true"></span><h3>Starting XI</h3></div><span>11 PLAYERS</span></div>
+              <div class="squad-pitch" id="squad-starting" aria-label="Published starting eleven arranged by position"></div>
+              <div class="squad-roster-head bench-head"><div><span class="squad-head-line" aria-hidden="true"></span><h3>Bench</h3></div><span>4 PLAYERS</span></div>
+              <div class="squad-bench" id="squad-bench" aria-label="Published bench in order"></div>
+            </div>
+            <p class="squad-data-context" id="squad-context">—</p>
+            <p class="squad-fetched" id="squad-fetched">—</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a class="brand brand-small" href="./" aria-label="FPLPilot — homepage"><span class="brand-word">fplpilot<span class="brand-period">.</span></span></a>
+        <p>An independent Fantasy Premier League companion. Public gameweek picks only, not a manager's private or pending changes. Not affiliated with or endorsed by the Premier League.</p>
+        <span>READ THE GAME BETTER.</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
