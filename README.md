@@ -2,6 +2,47 @@
 
 A responsive, independent Fantasy Premier League companion website with the **Matchday Studio** design system.
 
+## Step 3 — Squad Intelligence (read-only)
+
+Open `squad.html` from the homepage and enter the **numeric FPL Team ID** from
+the official **Points** page address (for example, the `1234567` in
+`https://fantasy.premierleague.com/entry/1234567/event/10`).
+
+The page displays the latest available **published** 15-player squad (starting
+XI and four substitutes) including player name, club, position, captain and
+vice-captain as reported by Fantasy Premier League.
+
+**Important limitations:**
+- This is **not** the live editable squad; transfers made after the shown
+  gameweek deadline are not visible until publicly published.
+- The endpoint is an **undocumented** public FPL API and may change or become
+  unavailable. Errors are shown instead of invented players.
+- No password, cookies, token, or FPL sign-in is requested.
+- The Team ID is sent to the read-only Worker for the requested lookup and is
+  not stored by the website.
+- Only the public team name, published picks and player metadata are returned.
+  A user's private team state cannot be retrieved through the public endpoint.
+
+### Read-only API service
+
+GitHub Pages cannot execute server code and the FPL API cannot reliably be
+called cross-origin from a browser. The small API Worker lives in
+`worker/squad-api.mjs` and has been deployed separately to:
+
+`https://fplpilot-squad-api.4b9fgkmtpy.workers.dev/squad?team=1234567`
+
+It uses only `GET`, validates requested IDs and the returned player roster,
+restricts browser CORS to FPLPilot's GitHub Pages origin, applies upstream
+caching, and returns generic upstream errors without exposing raw FPL payloads.
+
+Check the Worker source in the GitHub repository before changing its
+deployment; editing the source file alone does **not** redeploy the Worker.
+Cloudflare configuration or the FPL upstream service may require maintenance.
+
+Tests: `node --test tests/*.test.cjs`. This suite is also included in the
+GitHub Actions workflow. Static and simulated API tests do not replace a
+real-manager lookup in iPhone Safari.
+
 ## Step 2 — Gameweek overview
 
 The homepage gameweek panel shows:
