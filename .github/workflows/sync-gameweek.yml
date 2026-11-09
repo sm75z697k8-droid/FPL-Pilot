@@ -8,6 +8,11 @@ on:
   push:
     paths:
       - ".github/workflows/sync-gameweek.yml"
+      - "worker/squad-api.mjs"
+      - "squad.js"
+      - "squad.html"
+      - "squad.css"
+      - "tests/**"
 
 permissions:
   contents: write
@@ -33,7 +38,7 @@ jobs:
       - name: Run offline checks
         run: |
           python3 -m unittest discover -s tests -p 'test_*.py' -v
-          node --test tests/gameweek.test.cjs
+          node --test tests/*.test.cjs
 
       - name: Fetch public FPL gameweek data
         run: python3 scripts/sync_gameweek.py
