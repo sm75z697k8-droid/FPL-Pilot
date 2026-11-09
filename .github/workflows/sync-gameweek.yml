@@ -1,0 +1,51 @@
+name: Sync FPL gameweek data
+
+on:
+  schedule:
+    # Avoid the start-of-hour GitHub Actions load spike.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/sync-gameweek.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fplpilot-gameweek-snapshot
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Validate and publish official FPL deadline snapshot
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run offline checks
+        run: |
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          node --test tests/gameweek.test.cjs
+
+      - name: Fetch public FPL gameweek data
+        run: python3 scripts/sync_gameweek.py
+
+      - name: Commit validated snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/gameweek.json
+          if git diff --cached --quiet; then
+            echo "No snapshot changes."
+            exit 0
+          fi
+          git commit -m "data: refresh official FPL gameweeks [skip ci]"
+          git push origin HEAD:main
