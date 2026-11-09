@@ -6,7 +6,7 @@ const { validateSnapshot, chooseUpcoming, formatCountdown } = require("../gamewe
 const now = Date.parse("2026-11-10T00:00:00Z");
 const events = Array.from({ length: 38 }, (_, i) => ({
   id: i + 1,
-  deadline_time: new Date(now + (i - 9) * 7 * 86400_000 + 86400_000).toISOString(),
+  deadline_time: new Date(now + (i - 10) * 7 * 86400_000 + 86400_000).toISOString(),
   is_current: i === 9,
   is_next: i === 10,
 }));
