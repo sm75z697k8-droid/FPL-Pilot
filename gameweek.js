@@ -99,8 +99,8 @@
 
     function setStatus(state, label, message) {
       panel.dataset.state = state;
-      els.status.textContent = label;
-      els.note.textContent = message;
+      if (els.status.textContent !== label) els.status.textContent = label;
+      if (els.note.textContent !== message) els.note.textContent = message;
     }
 
     function clearValues() {
