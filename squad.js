@@ -140,6 +140,13 @@
 
     form.addEventListener("submit", async event => {
       event.preventDefault();
+      // Cancel any previous request before validating a new submission.
+      // Prevents a late response from replacing the most recent form state.
+      if (activeController) {
+        activeController.abort();
+        activeController = null;
+        submit.disabled = false;
+      }
       const teamId = parseTeamId(input.value.trim());
       if (!teamId) {
         data.hidden = true;
@@ -148,7 +155,6 @@
         return;
       }
 
-      if (activeController) activeController.abort();
       const controller = new AbortController();
       activeController = controller;
       const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
