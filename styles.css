@@ -49,7 +49,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 .signal-dot { width: 6px; height: 6px; flex-shrink: 0; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px rgba(213,242,139,.5); }
 .eyebrow-index { color: #758b87; }
 .hero h1 { max-width: 760px; margin: 1.8rem 0 1.45rem; font-size: clamp(3.4rem, 5.55vw, 6.3rem); line-height: .995; font-weight: 790; letter-spacing: -.075em; text-wrap: balance; }
-.hero h1 em, .section-heading h2 em, .band-heading h2 em, .closing-inner h2 em { color: var(--accent); font-style: normal; }
+.hero h1 em, .roadmap-intro h2 em, .band-heading h2 em, .closing-inner h2 em { color: var(--accent); font-style: normal; }
 .heading-stop { color: var(--ink); }
 .hero-description { max-width: 530px; margin: 0; font-size: clamp(1rem, 1.35vw, 1.12rem); line-height: 1.76; color: var(--muted); }
 /* Alternate compact presentation is hidden outside narrow mobile screens. */
@@ -114,25 +114,27 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 .principles-band { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: #142029; }
 .principles-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 8vw, 9rem); align-items: end; padding-block: clamp(4rem, 6vw, 6.5rem); }
 .section-index { display: inline-block; color: var(--accent); font-size: .66rem; font-weight: 800; letter-spacing: .16em; }
-.band-heading h2, .section-heading h2 { margin: 1.2rem 0 0; font-size: clamp(2.5rem, 4vw, 4.8rem); line-height: 1.06; letter-spacing: -.065em; font-weight: 780; text-wrap: balance; }
+.band-heading h2, .roadmap-intro h2 { margin: 1.2rem 0 0; font-size: clamp(2.5rem, 4vw, 4.8rem); line-height: 1.06; letter-spacing: -.065em; font-weight: 780; text-wrap: balance; }
 .band-body p { margin: 0 0 2.5rem; color: #b3c3c4; font-size: clamp(1rem, 1.45vw, 1.22rem); line-height: 1.75; max-width: 530px; }
 .band-rule { display: block; height: 1px; width: 100%; background: linear-gradient(90deg, var(--accent) 0 24%, var(--border) 24% 100%); }
 
-/* Roadmap previews */
-.roadmap-section { padding-block: clamp(5.5rem, 9vw, 9rem); }
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 3rem; margin-bottom: 3rem; }
-.section-heading > div { max-width: 760px; }
-.section-heading p { margin: 0 0 .35rem; color: #a9bbbe; line-height: 1.7; max-width: 300px; font-size: .92rem; }
-.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.feature-card { display: flex; flex-direction: column; justify-content: space-between; gap: 3.4rem; min-height: 300px; padding: clamp(1.4rem, 2.5vw, 2.35rem); border: 1px solid rgba(211,231,225,.14); background: #17242c; transition: background .2s, border-color .2s; }
-.feature-card:hover { background: #1b2b32; border-color: rgba(213,242,139,.36); }
-.feature-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
-.feature-number { color: var(--accent); font-size: .72rem; font-weight: 800; }
-.feature-state { color: #9bb0b0; font-size: .58rem; font-weight: 700; letter-spacing: .1em; }
-.feature-icon { width: 55px; height: 55px; color: var(--accent); margin-top: auto; }
-.feature-icon svg { width: 100%; height: 100%; }
-.feature-card h3 { margin: 0 0 .6rem; font-size: clamp(1.25rem, 1.8vw, 1.62rem); font-weight: 740; letter-spacing: -.04em; }
-.feature-card p { margin: 0; max-width: 330px; font-size: .88rem; line-height: 1.65; color: #a7babe; }
+/* Compact editorial roadmap */
+.roadmap-section { padding-block: clamp(4rem, 6vw, 6.5rem); border-bottom: 1px solid var(--border); }
+.roadmap-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr); gap: clamp(2.5rem, 6vw, 7rem); align-items: center; }
+.roadmap-intro { min-width: 0; }
+.roadmap-intro h2 { max-width: 630px; }
+.roadmap-intro p { max-width: 475px; margin: 1.35rem 0 0; color: #a9bbbe; line-height: 1.75; font-size: clamp(.94rem, 1.15vw, 1.05rem); }
+.roadmap-milestone { display: flex; flex-direction: column; gap: clamp(1.9rem, 3.4vw, 3rem); min-width: 0; padding: clamp(1.4rem, 2.5vw, 2.25rem); border: 1px solid rgba(213,242,139,.22); border-radius: 7px; background: #192a32; }
+.milestone-header, .milestone-footer { display: flex; align-items: center; justify-content: space-between; gap: .9rem; }
+.milestone-number { color: var(--accent); font-size: .66rem; font-weight: 790; letter-spacing: .1em; }
+.milestone-status { display: inline-flex; align-items: center; gap: .45rem; flex-shrink: 0; border: 1px solid rgba(213,242,139,.28); padding: .38rem .55rem; border-radius: 99px; color: #d5f28b; font-size: .57rem; font-weight: 770; letter-spacing: .09em; }
+.milestone-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.milestone-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 1.3rem; border: 1px solid rgba(213,242,139,.22); border-radius: 8px; background: #263e40; color: var(--accent); }
+.milestone-icon svg { width: 29px; height: 29px; }
+.milestone-body h3 { margin: 0 0 .65rem; color: var(--ink); font-size: clamp(1.42rem, 2.2vw, 2rem); line-height: 1.15; letter-spacing: -.045em; }
+.milestone-body p { max-width: 370px; margin: 0; color: #b1c3c5; font-size: .91rem; line-height: 1.68; }
+.milestone-footer { padding-top: 1rem; border-top: 1px solid var(--border); color: #a8bbbd; font-size: .6rem; font-weight: 720; letter-spacing: .09em; }
+.milestone-footer-mark { color: var(--accent); font-size: 1.15rem; }
 
 /* Closing + footer */
 .closing-section { background: var(--accent); color: #14221b; }
@@ -179,10 +181,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
   .mobile-nav-panel a:hover { color: var(--accent); }
   .principles-inner { grid-template-columns: 1fr; gap: 2rem; }
   .band-body p { margin-bottom: 1.5rem; }
-  .section-heading { flex-direction: column; align-items: start; gap: 1.3rem; }
-  .section-heading p { max-width: 540px; }
-  .feature-grid { grid-template-columns: 1fr; }
-  .feature-card { min-height: 230px; gap: 1.6rem; }
+  .roadmap-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .roadmap-intro p { max-width: 550px; }
   .footer-inner { align-items: start; flex-wrap: wrap; gap: 1.1rem; }
   .footer-inner p { order: 3; flex-basis: 100%; }
 }
@@ -221,8 +221,14 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
   .studio-footer { padding: .76rem .8rem; font-size: .46rem; letter-spacing: .035em; }
   .visual-caption { margin: 1rem 0 0; font-size: .51rem; }
 
-  .band-heading h2, .section-heading h2 { font-size: clamp(2.55rem, 11vw, 3.6rem); }
-  .feature-card { padding: 1.55rem; }
+  .band-heading h2, .roadmap-intro h2 { font-size: clamp(2.55rem, 11vw, 3.6rem); }
+  .roadmap-section { padding-block: 3.75rem; }
+  .roadmap-layout { gap: 1.8rem; }
+  .roadmap-intro p { margin-top: 1rem; font-size: .92rem; }
+  .roadmap-milestone { padding: 1.3rem; gap: 2rem; }
+  .milestone-body h3 { font-size: 1.48rem; }
+  .milestone-body p { font-size: .88rem; }
+  .milestone-footer { font-size: .54rem; letter-spacing: .045em; }
   .closing-inner h2 { font-size: clamp(2.75rem, 11.5vw, 4.4rem); }
 }
 @media (prefers-reduced-motion: reduce) {
