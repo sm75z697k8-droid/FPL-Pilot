@@ -52,6 +52,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 .hero h1 em, .section-heading h2 em, .band-heading h2 em, .closing-inner h2 em { color: var(--accent); font-style: normal; }
 .heading-stop { color: var(--ink); }
 .hero-description { max-width: 530px; margin: 0; font-size: clamp(1rem, 1.35vw, 1.12rem); line-height: 1.76; color: var(--muted); }
+/* Alternate compact presentation is hidden outside narrow mobile screens. */
+.hero-description-compact, .mobile-decision-icon, .mobile-label { display: none; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 2.3rem; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 1.7rem; min-height: 52px; padding: .9rem 1.35rem; border-radius: 5px; font-size: .88rem; font-weight: 760; transition: background .2s, transform .2s; }
 .button:hover { transform: translateY(-2px); }
@@ -187,28 +189,38 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outli
 @media (max-width: 540px) {
   .container { width: min(100% - 2.25rem, 1392px); }
   .brand-word { font-size: 1.48rem; }
-  .hero { padding-top: 4.5rem; padding-bottom: 4.5rem; gap: 3.7rem; }
+
+  /* Editorial headline and full-width primary action, without the extra mobile scroll. */
+  .hero { padding-top: 3.1rem; padding-bottom: 3.5rem; gap: 2.25rem; }
   .eyebrow { font-size: .56rem; gap: .46rem; letter-spacing: .095em; }
-  .hero h1 { margin-top: 1.4rem; font-size: clamp(3.18rem, 12vw, 4.3rem); line-height: 1.01; letter-spacing: -.072em; }
-  .hero-description { font-size: .98rem; line-height: 1.69; }
-  .hero-actions { gap: .9rem 1.35rem; margin-top: 1.8rem; }
-  .button { min-height: 52px; padding: .9rem 1.05rem; font-size: .81rem; gap: .8rem; }
-  .hero-footnote { margin-top: 3.3rem; font-size: .55rem; letter-spacing: .06em; }
-  .studio-card { transform: rotate(0); }
-  .studio-topline { min-height: 67px; padding: .9rem .9rem; }
+  .hero h1 { margin: 1.1rem 0 1rem; font-size: clamp(2.48rem, 10.6vw, 3.65rem); line-height: 1.035; letter-spacing: -.069em; }
+  .hero-description { font-size: .96rem; line-height: 1.6; }
+  .hero-description-full { display: none; }
+  .hero-description-compact { display: inline; }
+  .hero-actions { display: block; margin-top: 1.4rem; }
+  .hero-actions .button { display: flex; width: 100%; min-height: 52px; padding: .92rem 1.05rem; font-size: .84rem; gap: .8rem; }
+  .hero-actions .text-link, .hero-footnote { display: none; }
+
+  /* Reuse the existing decision items as three small cards; desktop studio is untouched. */
+  .studio-card { transform: none; }
+  .studio-topline { min-height: 61px; padding: .75rem .85rem; }
   .studio-symbol { width: 27px; height: 27px; font-size: 1rem; }
   .studio-title-group { gap: .46rem; }
   .studio-title-group strong { font-size: .65rem; }
   .studio-kicker { font-size: .49rem; }
   .preview-tag { padding: .35rem .45rem; font-size: .49rem; }
-  .studio-content { display: flex; flex-direction: column; padding: .65rem; }
-  .pitch { min-height: 260px; max-height: 290px; }
-  .decision-panel { gap: 0; }
-  .decision-item { padding: .8rem 0; }
-  .decision-item strong { font-size: .74rem; }
-  .decision-bottom { padding-top: .8rem; }
-  .studio-footer { padding: .83rem .8rem; font-size: .43rem; letter-spacing: .035em; }
+  .studio-content { display: block; padding: .65rem; }
+  .pitch-panel { display: none; }
+  .decision-panel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; padding: 0; border: 0; background: transparent; }
+  .decision-panel .panel-heading, .decision-bottom, .decision-number, .decision-arrow, .decision-item strong, .decision-item small { display: none; }
+  .decision-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .55rem; min-width: 0; min-height: 100px; padding: .8rem .2rem; border: 1px solid rgba(213,242,139,.09); border-radius: 6px; background: #293b42; text-align: center; }
+  .decision-item div { align-items: center; gap: 0; width: 100%; }
+  .mobile-decision-icon { display: block; width: 27px; height: 27px; color: var(--accent); }
+  .mobile-decision-icon svg { width: 100%; height: 100%; }
+  .mobile-label { display: block; max-width: 100%; color: #e5eeeb; font-size: .73rem; font-weight: 710; letter-spacing: -.025em; overflow-wrap: anywhere; }
+  .studio-footer { padding: .76rem .8rem; font-size: .46rem; letter-spacing: .035em; }
   .visual-caption { margin: 1rem 0 0; font-size: .51rem; }
+
   .band-heading h2, .section-heading h2 { font-size: clamp(2.55rem, 11vw, 3.6rem); }
   .feature-card { padding: 1.55rem; }
   .closing-inner h2 { font-size: clamp(2.75rem, 11.5vw, 4.4rem); }
