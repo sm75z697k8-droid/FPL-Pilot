@@ -84,7 +84,9 @@
 .squad-position-row { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-around; gap:clamp(.2rem,.95vw,.7rem); min-width:0; width:100%; }
 .squad-player { display:flex; flex:0 1 148px; width:100%; min-width:0; max-width:148px; flex-direction:column; align-items:center; gap:.18rem; text-align:center; }
 .player-visual { position:relative; display:grid; place-items:end center; width:82px; height:76px; flex:0 0 auto; filter:drop-shadow(0 5px 5px rgba(0,0,0,.24)); }
-.player-kit-image { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 4px 5px rgba(0,0,0,.18)); }
+/* Keep images eligible for Safari loading; reveal only after a confirmed load. */
+.player-kit-image { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:contain; opacity:0; filter:drop-shadow(0 4px 5px rgba(0,0,0,.18)); }
+.player-kit-image[data-loaded="true"] { opacity:1; }
 .player-kit-image[hidden], .player-kit[hidden] { display:none; }
 .player-kit { position:relative; display:grid; place-items:center; width:49px; height:54px; padding-top:.3rem; clip-path:polygon(20% 1%,36% 10%,64% 10%,80% 1%,100% 21%,87% 43%,78% 38%,78% 100%,22% 100%,22% 38%,13% 43%,0 21%); background:linear-gradient(115deg,#c5e67d 0%,#e1f8a1 44%,#b7da67 100%); color:#26362b; font-size:.61rem; font-weight:850; letter-spacing:-.02em; line-height:1; }
 .player-kit::after { position:absolute; content:""; top:4px; left:50%; width:12px; height:7px; border-radius:0 0 9px 9px; background:#285344; transform:translateX(-50%); }
