@@ -29,6 +29,30 @@ vice-captain as reported by Fantasy Premier League.
   A user's private team state cannot be retrieved through the public endpoint.
 
 
+### Step 3.7 — Compact collectible-card squad tiles
+
+The existing 15 read-only squad tiles have been redesigned into a single
+framed, club-accented **Matchday Studio trading card** per player. Each card
+retains its official FPL-hosted jersey (with the existing illustrative fallback),
+player name, club, role, captain/vice-captain and real public FPL statistics.
+
+The upper-left role chip and upper-right **PTS** badge make the cards resemble
+compact football collectibles. **PTS is the player's official season-total
+points, not a video-game ability rating or expected-points prediction.**
+Current FPL market price is shown once in the bottom £m rail; season points
+are shown once in the top badge, without duplicating a second stats row.
+
+The visual frame uses club-colour *accents*, not licensed trading-card art or
+copied FC26 branding. The first team retains its four position rows; mobile
+sizes are deliberately constrained for formations with five midfielders.
+The existing four-substitute layout, sticky navigation and saved Team ID are
+unchanged. This is a visual refinement: it makes no new API calls and does not
+add any invented player data.
+
+The official FPL public API is undocumented; missing points or prices remain
+an em dash rather than a made-up score. See
+`tests/squad-trading-card.test.cjs` for the layout/semantics regressions.
+
 ### Step 3.6 — Enhanced player cards
 
 Starting XI and bench cards now display two **official current-season FPL values**:
