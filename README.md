@@ -29,6 +29,27 @@ vice-captain as reported by Fantasy Premier League.
   A user's private team state cannot be retrieved through the public endpoint.
 
 
+### Step 3.8 — Card proportions and compact pitch
+
+The trading-card tiles no longer grow to fill four equal-height pitch rows.
+Instead, each position row uses its natural content height and the pitch
+distributes the remaining vertical space evenly. The nameplate is no longer a
+flex-grow region, so the **current £m price sits directly beneath the name and
+club** instead of being pushed down into a large empty area. Official-hosted
+jerseys are slightly larger relative to the shorter cards.
+
+The iPhone pitch minimum height is reduced from 805px to 635px, allowing
+the pitch to grow naturally for long names or narrow formations. Bench cards
+receive the same compact name-and-price treatment. At screen widths up to
+350px, club/role labels use a tighter type treatment to avoid unwanted wraps
+when five players share one position line.
+
+Only `squad.css` and its cache-busting link in `squad.html` change visually;
+all picks, statistics, captaincy, jerseys, storage and navigation keep their
+existing data and interactions. The existing mobile layout regressions are
+updated in `tests/squad-trading-card.test.cjs`,
+`tests/squad-stats.test.cjs` and `tests/squad-bench-layout.test.cjs`.
+
 ### Step 3.7 — Compact collectible-card squad tiles
 
 The existing 15 read-only squad tiles have been redesigned into a single
