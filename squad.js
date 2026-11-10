@@ -330,7 +330,7 @@
     const remembered = readSavedTeamId();
     if (remembered) {
       showSavedCard(remembered);
-      loadTeam(remembered);
+      return loadTeam(remembered);
     }
   }
 
