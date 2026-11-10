@@ -18,10 +18,35 @@ vice-captain as reported by Fantasy Premier League.
 - The endpoint is an **undocumented** public FPL API and may change or become
   unavailable. Errors are shown instead of invented players.
 - No password, cookies, token, or FPL sign-in is requested.
-- The Team ID is sent to the read-only Worker for the requested lookup and is
-  not stored by the website.
+- After a successful lookup, the **public numeric Team ID only** is stored
+  in this browser's `localStorage` (key `fplpilot.savedTeamId.v1`). It is sent
+  to the read-only Worker when loading a squad. The actual squad, team name,
+  passwords, and tokens are **not** stored on the device by this feature.
+- Browser-local storage is not an encrypted vault and may be unavailable in
+  private browsing or cleared with website data. No ID is synced between
+  devices by FPLPilot.
 - Only the public team name, published picks and player metadata are returned.
   A user's private team state cannot be retrieved through the public endpoint.
+
+### Step 3.2 — Remember your Team ID (iPhone-friendly)
+
+When a manager enters a valid Team ID and the public squad loads successfully,
+FPLPilot remembers **only the Team ID** in that browser. Returning to
+`squad.html` automatically fetches a fresh published squad for that ID; it
+doesn't cache players or display a fictional squad when the API is unavailable.
+
+The saved-team card offers:
+
+- **Reload squad:** requests the most recent publicly published picks.
+- **Change team:** opens the Team ID form. The previous saved ID remains until
+  a **new valid squad loads successfully**, so an invalid new ID does not
+  silently replace the saved team.
+- **Forget saved Team ID:** deletes the browser-local key, hides the old squad,
+  and restores the entry form.
+
+If a browser blocks `localStorage`, the manual squad lookup still works and
+the page explicitly states that saving is unavailable. All three controls are
+keyboard-accessible. No backend database or login was added.
 
 ### Read-only API service
 
