@@ -28,6 +28,6 @@ test("bench names can wrap but are visually limited to two lines", () => {
 test("mobile keeps four equal bench columns and compact nameplates", () => {
   assert.match(rule(".squad-bench"), /grid-template-columns:\s*repeat\(4,minmax\(0,1fr\)\)/);
   assert.match(css, /@media\s*\(max-width:\s*540px\)/);
-  assert.match(css, /\.squad-bench \.player-caption\s*\{\s*min-height:\s*84px/);
-  assert.match(css, /\.squad-bench \.player-visual\s*\{\s*width:\s*47px;\s*height:\s*48px/);
+  assert.match(css, /\.squad-bench \.player-caption\s*\{\s*min-height:\s*0/);
+  assert.match(css, /\.squad-bench \.player-visual\s*\{\s*width:\s*49px;\s*height:\s*52px/);
 });
