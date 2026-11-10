@@ -28,6 +28,35 @@ vice-captain as reported by Fantasy Premier League.
 - Only the public team name, published picks and player metadata are returned.
   A user's private team state cannot be retrieved through the public endpoint.
 
+
+### Step 3.3 — Official FPL club jersey images
+
+Squad Intelligence now attempts to display the current official FPL shirt
+graphic for each player's Premier League club. Club codes are taken directly
+from the official `bootstrap-static` team record, not guessed from club names.
+
+The image patterns were verified in the FPL Statistics page during the
+2026/27 season:
+
+- Outfield: `https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_{club.code}-110.png`
+- Goalkeeper: first tries `shirt_{club.code}_1-110.png`; if unavailable,
+  tries the ordinary club home shirt.
+- Images remain hosted by Fantasy Premier League; this repository **does not
+  download or redistribute the jersey files**. Images are not embedded in
+  the static site or the Cloudflare API.
+
+The pre-existing, accessible position-shirt illustrations remain as
+fallbacks if the official image is missing, blocked or changes. Player
+names and captaincy still come from validated public FPL data.
+
+**Asset rights:** The Premier League and clubs reserve rights over their
+graphics, kit designs, marks and branding. Availability of a public image
+URL does **not** grant a licence to reuse it on a publicly accessible
+website. FPLPilot has no claim of approval or affiliation. Obtain
+appropriate permission before representing this implementation as
+licensed or releasing it commercially. Official FPL terms:
+`https://fantasy.premierleague.com/help/terms`.
+
 ### Step 3.2 — Remember your Team ID (iPhone-friendly)
 
 When a manager enters a valid Team ID and the public squad loads successfully,
