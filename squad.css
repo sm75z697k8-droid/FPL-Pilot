@@ -20,6 +20,30 @@
 .squad-form-row button span { margin-left: .55rem; }
 .squad-search form p { margin: .85rem 0 0; color: #a5b6b9; font-size: .77rem; line-height: 1.65; overflow-wrap: anywhere; }
 .squad-search code { color: #d5f28b; font-size: .76rem; }
+
+/* Remembered team — local Team ID only, no squad data stored. */
+.squad-search #squad-form[hidden], .squad-search #saved-team[hidden] { display: none; }
+.saved-team { display: flex; flex-direction: column; gap: 1.35rem; min-width: 0; }
+.saved-team-topline { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; }
+.saved-team-eyebrow { color: var(--accent); font-size: .66rem; font-weight: 780; letter-spacing: .12em; }
+.saved-team-device { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .62rem; border: 1px solid rgba(213,242,139,.23); border-radius: 100px; color: #c4d4c5; font-size: .55rem; font-weight: 720; letter-spacing: .08em; }
+.saved-team-device span { color: var(--accent); font-size: .58rem; }
+.saved-team-identity { display: flex; align-items: center; gap: 1rem; padding-block: .55rem; min-width: 0; }
+.saved-team-symbol { display: grid; flex: 0 0 auto; place-items: center; width: 47px; height: 47px; border: 1px solid rgba(213,242,139,.28); border-radius: 9px; background: #30453c; color: var(--accent); font-size: 1.45rem; font-weight: 760; }
+.saved-team-info { flex: 1; min-width: 0; }
+.saved-team-info h2 { margin: 0 0 .42rem; color: var(--ink); font-size: clamp(1.55rem, 2.35vw, 2.35rem); font-weight: 780; letter-spacing: -.05em; line-height: 1.15; overflow-wrap: anywhere; }
+.saved-team-info p { margin: 0; color: #a8bbbc; font-size: .78rem; font-variant-numeric: tabular-nums; }
+.saved-team-actions { display: flex; flex-wrap: wrap; gap: .65rem; }
+.saved-team-actions button { min-height: 48px; padding: .7rem 1.05rem; border-radius: 5px; font: inherit; font-size: .8rem; font-weight: 760; cursor: pointer; transition: background .2s, border-color .2s; }
+.saved-team-reload { flex: 1; border: 1px solid var(--accent); background: var(--accent); color: #17251e; }
+.saved-team-reload:hover { background: #e6ffa6; }
+.saved-team-reload:disabled { opacity: .6; cursor: wait; }
+.saved-team-reload span { margin-left: .5rem; font-size: 1rem; }
+.saved-team-change { flex: 0 0 auto; border: 1px solid rgba(213,242,139,.5); background: transparent; color: var(--accent); }
+.saved-team-change:hover { background: rgba(213,242,139,.08); border-color: var(--accent); }
+.saved-team-actions button:focus-visible, .saved-team-forget:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.saved-team-forget { align-self: flex-start; min-height: 44px; padding: .6rem 0; border: 0; border-bottom: 1px solid rgba(175,194,194,.35); border-radius: 0; background: none; color: #aebfc1; font: inherit; font-size: .72rem; line-height: 1.35; text-align: left; cursor: pointer; }
+.saved-team-forget:hover { color: #f0f4eb; border-color: #cbdad5; }
 .squad-privacy { display: flex; align-items: flex-start; gap: .6rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); color: #a7babd; font-size: .74rem; line-height: 1.6; }
 .squad-privacy > span:first-child { color: var(--accent); font-size: .95rem; line-height: 1.2; }
 
@@ -99,6 +123,14 @@
   .squad-search { padding: 1.1rem; }
   .squad-form-row { flex-direction: column; gap: .7rem; }
   .squad-form-row input, .squad-form-row button { width: 100%; min-height: 52px; }
+  .saved-team { gap: 1.05rem; }
+  .saved-team-eyebrow { font-size: .6rem; }
+  .saved-team-device { font-size: .5rem; }
+  .saved-team-symbol { width: 43px; height: 43px; }
+  .saved-team-info h2 { font-size: 1.6rem; }
+  .saved-team-actions { flex-direction: column; }
+  .saved-team-actions button { width: 100%; min-height: 48px; }
+  .saved-team-forget { font-size: .74rem; }
   .squad-results-section { padding-block: 3.5rem; }
   .squad-results-heading h2 { font-size: clamp(2.35rem, 10.3vw, 3.4rem); }
   .squad-summary { gap: .6rem; }
