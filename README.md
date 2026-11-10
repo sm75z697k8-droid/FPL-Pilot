@@ -29,6 +29,22 @@ vice-captain as reported by Fantasy Premier League.
   A user's private team state cannot be retrieved through the public endpoint.
 
 
+### Step 3.5 — Sticky squad navigation
+
+After a verified squad has loaded, the Team / Starting XI / Bench navigation
+appears above the team summary. On iPhone and desktop it sticks near the **top**
+of the screen as users scroll through the published squad. Native section
+anchors remain usable even if JavaScript is unavailable.
+
+The small `squad-nav.js` progressively highlights the visible section using
+`aria-current="location"`. The nav is not displayed when no squad data is
+available and does not cover Safari's bottom controls. The squad-specific
+stylesheet overrides the shared `overflow: hidden` wrapper (which otherwise
+prevents sticky positioning in Safari) without modifying the homepage.
+
+This feature requires **no** additional API requests, credentials or locally
+stored information. Offline tests are in `tests/squad-nav.test.cjs`.
+
 ### Step 3.3 — Official FPL club jersey images
 
 Squad Intelligence now attempts to display the current official FPL shirt
