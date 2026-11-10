@@ -289,7 +289,7 @@
         input.focus();
         return;
       }
-      loadTeam(teamId);
+      return loadTeam(teamId);
     });
 
     reload.addEventListener("click", () => {
@@ -301,7 +301,7 @@
         setState("idle", "No saved Team ID is available. Enter one to load your squad.");
         return;
       }
-      loadTeam(teamId);
+      return loadTeam(teamId);
     });
 
     change.addEventListener("click", () => {
