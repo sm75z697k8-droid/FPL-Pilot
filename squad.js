@@ -87,9 +87,21 @@
     return { ...data, squad: [...data.squad].sort((a, b) => a.squad_slot - b.squad_slot) };
   }
 
+  // This URL pattern and 110px variant were observed in the current
+  // official FPL statistics page. The images remain on the FPL host.
+  // Reachable images do not grant permission to republish copyrighted kits.
+  const FPL_SHIRT_BASE = "https://fantasy.premierleague.com/dist/img/shirts/standard/";
+
+  function officialKitUrl(player, goalkeeper = false) {
+    if (!Number.isInteger(player?.club_code) ||
+        player.club_code < 1 || player.club_code > 9999) return null;
+    const suffix = goalkeeper ? "_1" : "";
+    return `${FPL_SHIRT_BASE}shirt_${player.club_code}${suffix}-110.png`;
+  }
+
   function createPlayer(player) {
-    // Decorative kits represent positions, not claimed real club kit designs.
-    // All manager/player data remains text-only and comes from verified FPL picks.
+    // Real official-hosted jerseys are displayed when provided by FPL.
+    // A neutral position shirt remains when images are unavailable.
     const card = document.createElement("div");
     card.className = "squad-player";
 
@@ -127,6 +139,36 @@
       description.textContent = player.captain ? "Captain" : "Vice captain";
       label.append(description);
     }
+    // Keep captain badges visually above the jersey and avoid making an
+    // external image a requirement for displaying the player.
+    const imageUrl = officialKitUrl(player, player.role_id === 1);
+    if (imageUrl) {
+      const image = document.createElement("img");
+      image.className = "player-kit-image";
+      image.alt = "";
+      image.width = 110;
+      image.height = 110;
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.hidden = true;
+      let triedHomeForGoalkeeper = false;
+      image.onload = () => {
+        image.hidden = false;
+        shirt.hidden = true;
+      };
+      image.onerror = () => {
+        if (player.role_id === 1 && !triedHomeForGoalkeeper) {
+          triedHomeForGoalkeeper = true;
+          image.src = officialKitUrl(player);
+        } else {
+          image.hidden = true;
+          shirt.hidden = false;
+        }
+      };
+      image.src = imageUrl;
+      visual.append(image);
+    }
+
     card.append(visual, label);
     return card;
   }
@@ -336,7 +378,7 @@
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = { parseTeamId, validateSquad, createPlayer, renderStarting, renderBench,
-      readSavedTeamId, saveTeamId, forgetTeamId, init };
+      readSavedTeamId, saveTeamId, forgetTeamId, officialKitUrl, init };
   }
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", init);
 })();
