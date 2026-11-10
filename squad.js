@@ -118,6 +118,9 @@
     card.className = "squad-player";
     // A visual accent only — never used to infer team data or player stats.
     card.dataset.club = player.club;
+    // The role is verified FPL data. The card's corner chip is decorative;
+    // the same role remains available in the accessible text nameplate.
+    card.dataset.role = player.role;
 
     const visual = document.createElement("span");
     visual.className = "player-visual";
