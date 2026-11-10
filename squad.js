@@ -4,6 +4,53 @@
   "use strict";
   const API = "https://fplpilot-squad-api.4b9fgkmtpy.workers.dev/squad";
   const TIMEOUT_MS = 15000;
+  // Only a public numeric FPL Team ID is stored locally; never squad data or credentials.
+  const SAVED_TEAM_KEY = "fplpilot.savedTeamId.v1";
+
+  function browserStorage() {
+    try {
+      return typeof window !== "undefined" ? window.localStorage : null;
+    } catch {
+      return null; // Safari private mode or restricted storage.
+    }
+  }
+
+  function readSavedTeamId(storage = browserStorage()) {
+    if (!storage) return null;
+    try {
+      const value = storage.getItem(SAVED_TEAM_KEY);
+      if (value === null) return null;
+      const id = parseTeamId(value);
+      if (id === null) {
+        storage.removeItem(SAVED_TEAM_KEY);
+        return null;
+      }
+      return id;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveTeamId(teamId, storage = browserStorage()) {
+    const id = parseTeamId(String(teamId));
+    if (!id || !storage) return false;
+    try {
+      storage.setItem(SAVED_TEAM_KEY, String(id));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function forgetTeamId(storage = browserStorage()) {
+    if (!storage) return false;
+    try {
+      storage.removeItem(SAVED_TEAM_KEY);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 
   function parseTeamId(raw) {
     if (typeof raw !== "string" || !/^[1-9][0-9]{0,8}$/.test(raw)) return null;
@@ -138,6 +185,12 @@
     const bench = get("squad-bench");
     const context = get("squad-context");
     const fetched = get("squad-fetched");
+    const savedCard = get("saved-team");
+    const savedHeading = get("saved-team-heading");
+    const savedId = get("saved-team-id");
+    const reload = get("saved-team-reload");
+    const change = get("saved-team-change");
+    const forget = get("saved-team-forget");
 
     let activeController = null;
 
@@ -145,35 +198,37 @@
       state.dataset.state = type;
       state.textContent = type === "loading" ? "LOADING" :
         type === "error" ? "UNAVAILABLE" : type === "ready" ? "SQUAD VERIFIED" : "READY TO SEARCH";
-      if (description) {
-        message.hidden = false;
-        message.textContent = description;
-      } else {
-        message.hidden = true;
-      }
+      message.hidden = !description;
+      if (description) message.textContent = description;
     }
 
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
-      // Cancel any previous request before validating a new submission.
-      // Prevents a late response from replacing the most recent form state.
-      if (activeController) {
-        activeController.abort();
-        activeController = null;
-        submit.disabled = false;
-      }
-      const teamId = parseTeamId(input.value.trim());
-      if (!teamId) {
-        data.hidden = true;
-        setState("error", "Enter a valid FPL Team ID (1–9 digits, no spaces).");
-        input.focus();
-        return;
-      }
+    function showSavedCard(teamId, verifiedName) {
+      input.value = String(teamId);
+      savedHeading.textContent = verifiedName || "Your FPL squad";
+      savedId.textContent = `FPL Team ID ${teamId}`;
+      form.hidden = true;
+      savedCard.hidden = false;
+    }
 
+    function showEntryForm() {
+      savedCard.hidden = true;
+      form.hidden = false;
+    }
+
+    function cancelCurrentRequest() {
+      if (activeController) activeController.abort();
+      activeController = null;
+      submit.disabled = false;
+      reload.disabled = false;
+    }
+
+    async function loadTeam(teamId) {
+      cancelCurrentRequest();
       const controller = new AbortController();
       activeController = controller;
       const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
       submit.disabled = true;
+      reload.disabled = true;
       data.hidden = true;
       setState("loading", "Retrieving the latest published squad from Fantasy Premier League…");
 
@@ -183,12 +238,13 @@
           mode: "cors", signal: controller.signal, cache: "no-store"
         });
         const body = await response.json().catch(() => null);
+        // An aborted request might still resolve. Never render it after switching teams.
+        if (activeController !== controller || controller.signal.aborted) return;
         if (!response.ok) throw new Error(
           typeof body?.error === "string" ? body.error : "Could not retrieve the squad."
         );
 
         const result = validateSquad(body, teamId);
-        // Build the full roster before revealing it; never show a partially rendered lineup.
         renderStarting(result.squad, starting);
         renderBench(result.squad, bench);
         teamName.textContent = result.team.name;
@@ -196,25 +252,91 @@
         gameweek.textContent = `GW${result.gameweek.id}`;
         context.textContent = `These are the published Gameweek ${result.gameweek.id} picks (deadline: ${formatLocal(result.gameweek.deadline_time)}). Transfers and changes since this deadline are not included.`;
         fetched.textContent = `Retrieved ${new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date())} · Source: official FPL public gameweek data.`;
-        setState("ready", "");
         data.hidden = false;
+
+        // Remember the ID only after FPL confirms a real, valid squad.
+        // Storage may be unavailable; the squad viewer must still work normally.
+        if (saveTeamId(teamId)) {
+          showSavedCard(teamId, result.team.name);
+          setState("ready", "");
+        } else {
+          showEntryForm();
+          setState("ready", "Squad loaded. Browser storage is unavailable, so your Team ID could not be remembered on this device.");
+        }
       } catch (error) {
-        if (controller.signal.aborted && controller !== activeController) return;
+        if (activeController !== controller) return;
         setState("error", error.name === "AbortError"
           ? "The request took too long. Please try again."
           : (error instanceof TypeError ? "Network connection unavailable. Please retry." : error.message));
       } finally {
         clearTimeout(timeout);
-        if (controller === activeController) {
+        if (activeController === controller) {
           activeController = null;
           submit.disabled = false;
+          reload.disabled = false;
         }
       }
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      // Cancel even when the newly entered ID is invalid.
+      cancelCurrentRequest();
+      const teamId = parseTeamId(input.value.trim());
+      if (!teamId) {
+        data.hidden = true;
+        setState("error", "Enter a valid FPL Team ID (1–9 digits, no spaces).");
+        input.focus();
+        return;
+      }
+      loadTeam(teamId);
     });
+
+    reload.addEventListener("click", () => {
+      const teamId = readSavedTeamId();
+      if (!teamId) {
+        cancelCurrentRequest();
+        showEntryForm();
+        data.hidden = true;
+        setState("idle", "No saved Team ID is available. Enter one to load your squad.");
+        return;
+      }
+      loadTeam(teamId);
+    });
+
+    change.addEventListener("click", () => {
+      cancelCurrentRequest();
+      showEntryForm();
+      data.hidden = true;
+      setState("idle", "Enter another Team ID. Your saved team stays until a new squad loads successfully.");
+      input.focus();
+      input.select();
+    });
+
+    forget.addEventListener("click", () => {
+      cancelCurrentRequest();
+      if (!forgetTeamId()) {
+        setState("error", "Unable to clear the Team ID from this browser. Check your browser's website-data settings.");
+        return;
+      }
+      showEntryForm();
+      input.value = "";
+      data.hidden = true;
+      setState("idle", "Saved Team ID cleared from this browser. Enter another ID whenever you're ready.");
+      input.focus();
+    });
+
+    // On return visits, show the saved card immediately and retrieve fresh public picks.
+    const remembered = readSavedTeamId();
+    if (remembered) {
+      showSavedCard(remembered);
+      loadTeam(remembered);
+    }
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { parseTeamId, validateSquad, createPlayer, renderStarting, renderBench };
+    module.exports = { parseTeamId, validateSquad, createPlayer, renderStarting, renderBench,
+      readSavedTeamId, saveTeamId, forgetTeamId, init };
   }
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", init);
 })();
