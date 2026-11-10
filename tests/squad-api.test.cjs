@@ -8,7 +8,8 @@ test.before(async () => { api = await import(pathToFileURL(path.resolve(__dirnam
 const clubs = [{ id: 1, short_name: "ARS", code: 3 }, { id: 2, short_name: "LIV", code: 14 }];
 const elements = Array.from({ length: 15 }, (_, i) => ({
  id: i + 101, web_name: "Player " + (i+1), team: i%2 ? 1:2,
- element_type: i===0 || i===11 ? 1: i<6 ? 2 : i<11 ? 3 : 4
+ element_type: i===0 || i===11 ? 1: i<6 ? 2 : i<11 ? 3 : 4,
+ total_points: 100 + i, now_cost: 75 + i
 }));
 const boot = { elements, teams: clubs, element_types: [
  {id:1, singular_name_short:"GKP"}, {id:2, singular_name_short:"DEF"},
@@ -36,6 +37,10 @@ test("joins all 15 picks to real player metadata",()=>{
  assert.equal(result.team.id,321);
  assert.equal(result.squad[0].role,"GKP");
  assert.equal(result.squad[0].club_code,14);
+ assert.equal(result.squad[0].total_points,100);
+ assert.equal(result.squad[0].price_tenths,75);
+ assert.equal(result.squad[14].total_points,114);
+ assert.equal(result.squad[14].price_tenths,89);
  assert.equal(result.squad[1].club_code,3);
  assert.equal(result.squad[5].captain,true);
  assert.equal(result.squad[7].vice_captain,true);
@@ -57,4 +62,20 @@ test("missing or invalid FPL club code remains null so the UI shows its fallback
  const invalidBoot={...boot,teams:[{id:1,short_name:"ARS",code:"3"},{id:2,short_name:"LIV",code:null}]};
  const result=api.buildPublicSquad({name:"Team"},picks,invalidBoot,event,321);
  assert.ok(result.squad.every(p=>p.club_code===null));
+});
+
+
+test("missing, malformed or unsupported stats show null instead of fabricated values", () => {
+ const altered = {...boot, elements: boot.elements.map((player, i) => (
+   i===0 ? {...player, total_points:"100", now_cost:null} :
+   i===1 ? {...player, total_points:-2, now_cost:2000} :
+   player
+ ))};
+ const result=api.buildPublicSquad({name:"Team"},picks,altered,event,321);
+ assert.equal(result.squad[0].total_points,null);
+ assert.equal(result.squad[0].price_tenths,null);
+ assert.equal(result.squad[1].total_points,null);
+ assert.equal(result.squad[1].price_tenths,null);
+ assert.equal(result.squad[2].total_points,102);
+ assert.equal(result.squad[2].price_tenths,77);
 });
