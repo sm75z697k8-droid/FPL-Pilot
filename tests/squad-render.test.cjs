@@ -111,9 +111,13 @@ test("official club shirt loads, replaces illustrated shirt, then preserves the 
     assert.equal(fallback.className, "player-kit");
     assert.equal(image.className, "player-kit-image");
     assert.equal(image.src, "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_3-110.png");
-    assert.equal(image.hidden, true);
+    // Regression: lazy + display:none prevented Safari from fetching jerseys.
+    assert.equal(image.loading, "eager");
+    assert.equal(image.hidden, false);
     assert.equal(image.alt, "");
+    assert.equal(image.dataset.loaded, undefined);
     image.onload();
+    assert.equal(image.dataset.loaded, "true");
     assert.equal(image.hidden, false);
     assert.equal(fallback.hidden, true);
     assert.equal(player.children[1].children[0].textContent, "Player 2");
@@ -124,6 +128,8 @@ test("unavailable official image keeps the original illustrated jersey", () => {
   withDocument(() => {
     const player = createPlayer({ ...players[1], club_code: 3 });
     const [fallback, image] = player.children[0].children;
+    assert.equal(fallback.hidden, false);
+    assert.equal(image.hidden, false);
     image.onerror();
     assert.equal(image.hidden, true);
     assert.equal(fallback.hidden, false);
