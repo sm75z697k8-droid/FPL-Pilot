@@ -83,11 +83,13 @@
 .squad-pitch::after { position:absolute; z-index:-1; content:""; top:50%; left:50%; width:clamp(66px,10%,110px); aspect-ratio:1; border:1px solid rgba(218,247,220,.23); border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; }
 .squad-position-row { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-around; gap:clamp(.2rem,.95vw,.7rem); min-width:0; width:100%; }
 .squad-player { display:flex; flex:0 1 148px; width:100%; min-width:0; max-width:148px; flex-direction:column; align-items:center; gap:.18rem; text-align:center; }
-.player-visual { position:relative; display:grid; place-items:end center; width:64px; height:58px; flex:0 0 auto; filter:drop-shadow(0 5px 5px rgba(0,0,0,.24)); }
+.player-visual { position:relative; display:grid; place-items:end center; width:82px; height:76px; flex:0 0 auto; filter:drop-shadow(0 5px 5px rgba(0,0,0,.24)); }
+.player-kit-image { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 4px 5px rgba(0,0,0,.18)); }
+.player-kit-image[hidden], .player-kit[hidden] { display:none; }
 .player-kit { position:relative; display:grid; place-items:center; width:49px; height:54px; padding-top:.3rem; clip-path:polygon(20% 1%,36% 10%,64% 10%,80% 1%,100% 21%,87% 43%,78% 38%,78% 100%,22% 100%,22% 38%,13% 43%,0 21%); background:linear-gradient(115deg,#c5e67d 0%,#e1f8a1 44%,#b7da67 100%); color:#26362b; font-size:.61rem; font-weight:850; letter-spacing:-.02em; line-height:1; }
 .player-kit::after { position:absolute; content:""; top:4px; left:50%; width:12px; height:7px; border-radius:0 0 9px 9px; background:#285344; transform:translateX(-50%); }
 .player-kit[data-position="GKP"] { background:linear-gradient(115deg,#8abebd 0%,#c1e6e1 44%,#84b8b6 100%); }
-.player-armband { position:absolute; z-index:2; top:-3px; right:1px; display:grid; place-items:center; min-width:23px; height:23px; padding-inline:3px; border:2px solid #183d33; border-radius:99px; background:#d5f28b; color:#15281d; font-size:.65rem; font-weight:900; line-height:1; box-shadow:0 2px 7px rgba(0,0,0,.3); }
+.player-armband { position:absolute; z-index:2; top:2px; right:0; display:grid; place-items:center; min-width:23px; height:23px; padding-inline:3px; border:2px solid #183d33; border-radius:99px; background:#d5f28b; color:#15281d; font-size:.65rem; font-weight:900; line-height:1; box-shadow:0 2px 7px rgba(0,0,0,.3); }
 .player-armband[data-kind="vice"] { background:#e4efea; color:#1c3540; font-size:.57rem; }
 .player-caption { display:flex; width:min(100%,137px); min-width:0; min-height:49px; flex-direction:column; justify-content:center; align-items:center; gap:.25rem; padding:.4rem .35rem .45rem; border:1px solid rgba(215,241,219,.24); border-radius:5px; background:rgba(13,34,31,.93); box-shadow:0 5px 10px rgba(0,0,0,.12); }
 .player-name { width:100%; color:#fff; font-size:clamp(.71rem,1.1vw,.89rem); font-weight:780; line-height:1.22; overflow-wrap:anywhere; }
@@ -99,7 +101,7 @@
 .squad-bench-slot { display:flex; min-width:0; flex-direction:column; align-items:center; gap:.6rem; padding:.65rem .25rem .75rem; border:1px solid rgba(216,236,230,.09); border-radius:5px; background:rgba(18,34,39,.48); }
 .squad-bench-slot > span { color:#b3c9c6; font-size:.59rem; font-weight:770; letter-spacing:.08em; }
 .squad-bench .squad-player { width:100%; }
-.squad-bench .player-visual { width:56px; height:53px; }
+.squad-bench .player-visual { width:66px; height:64px; }
 .squad-bench .player-kit { width:44px; height:49px; }
 .squad-bench .player-caption { background:rgba(13,29,34,.9); }
 
@@ -147,10 +149,11 @@
   .squad-pitch::before { inset: 7px; }
   .squad-position-row { gap: .12rem; }
   .squad-player { gap: .12rem; }
-  .player-visual { width: 43px; height: 45px; }
+  .player-visual { width: 56px; height: 57px; }
+  .player-kit-image { width: 100%; height: 100%; }
   .player-kit { width: 34px; height: 40px; padding-top: .24rem; font-size: .49rem; }
   .player-kit::after { top: 3px; width: 9px; height: 5px; }
-  .player-armband { top: -3px; right: 0; min-width: 19px; height: 19px; border-width: 1.5px; padding-inline: 2px; font-size: .54rem; }
+  .player-armband { top: 1px; right: 0; min-width: 19px; height: 19px; border-width: 1.5px; padding-inline: 2px; font-size: .54rem; }
   .player-armband[data-kind="vice"] { font-size: .46rem; }
   .player-caption { min-height: 45px; gap: .18rem; padding: .32rem .14rem .34rem; border-radius: 4px; }
   .player-name { font-size: clamp(.59rem, 2.75vw, .76rem); line-height: 1.17; letter-spacing: -.025em; }
@@ -159,7 +162,7 @@
   .squad-bench { padding: .3rem; gap: .25rem; }
   .squad-bench-slot { padding: .5rem .08rem .55rem; gap: .4rem; }
   .squad-bench-slot > span { font-size: .52rem; letter-spacing: .02em; }
-  .squad-bench .player-visual { width: 39px; height: 42px; }
+  .squad-bench .player-visual { width: 47px; height: 48px; }
   .squad-bench .player-kit { width: 32px; height: 37px; }
   .squad-message { padding: 1.25rem; font-size: .88rem; }
 }
