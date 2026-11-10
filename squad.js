@@ -148,11 +148,15 @@
       image.alt = "";
       image.width = 110;
       image.height = 110;
-      image.loading = "lazy";
+      // A display:none <img> combined with lazy loading can remain
+      // unfetched in Safari. Keep the image layout-eligible but transparent
+      // until its load event fires; the illustrated jersey remains visible.
+      image.loading = "eager";
       image.decoding = "async";
-      image.hidden = true;
+      image.hidden = false;
       let triedHomeForGoalkeeper = false;
       image.onload = () => {
+        image.dataset.loaded = "true";
         image.hidden = false;
         shirt.hidden = true;
       };
