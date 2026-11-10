@@ -8,8 +8,9 @@
   <title>Squad Intelligence — FPLPilot</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="squad.css?v=3.4.0">
+  <link rel="stylesheet" href="squad.css?v=3.5.0">
   <script src="squad.js?v=3.3.1" defer></script>
+  <script src="squad-nav.js?v=3.5.0" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -98,7 +99,15 @@
           </div>
 
           <div class="squad-data" id="squad-data" hidden>
-            <div class="squad-summary">
+            <nav class="squad-section-nav" id="squad-quick-nav" aria-label="Squad sections">
+              <span class="squad-section-nav-label" aria-hidden="true">ON THIS PAGE</span>
+              <div class="squad-section-links">
+                <a href="#squad-team-summary" aria-current="location">Team</a>
+                <a href="#squad-starting-section">Starting XI</a>
+                <a href="#squad-bench-section">Bench</a>
+              </div>
+            </nav>
+            <div class="squad-summary" id="squad-team-summary">
               <div class="squad-summary-name">
                 <span class="summary-overline">MANAGER'S TEAM</span>
                 <h3 id="squad-team-name">—</h3>
@@ -110,14 +119,14 @@
               </div>
             </div>
             <div class="squad-roster">
-              <div class="squad-roster-head"><div><span class="squad-head-line" aria-hidden="true"></span><h3>Starting XI</h3></div><span>11 PLAYERS</span></div>
+              <div class="squad-roster-head" id="squad-starting-section"><div><span class="squad-head-line" aria-hidden="true"></span><h3>Starting XI</h3></div><span>11 PLAYERS</span></div>
               <div class="squad-pitch-key" aria-label="Captain markers">
                 <span><b class="key-badge" aria-hidden="true">C</b> Captain</span>
                 <span><b class="key-badge key-badge-vice" aria-hidden="true">VC</b> Vice captain</span>
                 <span class="pitch-key-note">JERSEY IMAGES · FPL SOURCE</span>
               </div>
               <div class="squad-pitch" id="squad-starting" aria-label="Published starting eleven arranged by position"></div>
-              <div class="squad-roster-head bench-head"><div><span class="squad-head-line" aria-hidden="true"></span><h3>Bench</h3></div><span>4 PLAYERS</span></div>
+              <div class="squad-roster-head bench-head" id="squad-bench-section"><div><span class="squad-head-line" aria-hidden="true"></span><h3>Bench</h3></div><span>4 PLAYERS</span></div>
               <div class="squad-bench" id="squad-bench" aria-label="Published bench in order"></div>
             </div>
             <p class="squad-data-context" id="squad-context">—</p>
