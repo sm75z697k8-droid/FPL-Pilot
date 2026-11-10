@@ -73,8 +73,9 @@ test("each player retains its shirt and name then adds semantic, text-only metri
     assert.equal(caption.children[1].textContent, "MCI · DEF");
     const metrics = caption.children[2];
     assert.equal(metrics.className, "player-metrics");
-    assert.deepEqual(metrics.children.map(row => row.children[1].textContent), ["22", "£6.2m"]);
+    assert.deepEqual(metrics.children.map(row => row.children[1].textContent), ["22", "6.2m"]);
     assert.equal(metrics.children[0].attributes["aria-label"], "Season total points: 22");
+    assert.equal(metrics.children[1].children[0].textContent, "£");
     assert.equal(metrics.children[1].attributes["aria-label"], "Current FPL price: £6.2m");
     assert.equal(visual.children[1].className, "player-kit-image");
   });
@@ -115,7 +116,7 @@ test("mobile layout retains compact bench and club accent while keeping five-pla
   assert.match(css, /\.player-metrics\s*\{/);
   assert.match(css, /\.squad-player\[data-club="ARS"\]/);
   assert.match(css, /\.squad-bench \.squad-player\s*\{\s*flex:0 0 auto/);
-  assert.match(css, /\.player-metric-key\s*\{\s*font-size:\s*\.46rem/);
+  assert.match(css, /\.player-metric-key\s*\{\s*font-size:\s*\.56rem/);
   assert.match(css, /\.squad-pitch\s*\{\s*min-height:\s*675px/);
   assert.match(html, /PTS = SEASON TOTAL/);
   assert.match(html, /squad\.css\?v=3\.6\.0/);
