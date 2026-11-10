@@ -77,6 +77,12 @@ export function buildPublicSquad(entry, picksPayload, bootstrap, gameweek, teamI
       // FPL's stable Premier League club code, used only to select the
       // official public FPL shirt graphic on the client (not a guessed ID).
       club_code: Number.isInteger(club.code) && club.code > 0 && club.code < 10000 ? club.code : null,
+      // Official FPL season totals and current price from bootstrap-static.
+      // now_cost is expressed in tenths of £1m; missing fields stay null.
+      total_points: Number.isInteger(player.total_points) &&
+        player.total_points >= 0 && player.total_points <= 2000 ? player.total_points : null,
+      price_tenths: Number.isInteger(player.now_cost) &&
+        player.now_cost > 0 && player.now_cost <= 1000 ? player.now_cost : null,
       role: position.singular_name_short,
       role_id: player.element_type,
       squad_slot: pick.position,
