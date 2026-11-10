@@ -156,7 +156,7 @@ html { scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
 .player-kit { position:relative; display:grid; place-items:center; width:49px; height:54px; padding-top:.3rem; clip-path:polygon(20% 1%,36% 10%,64% 10%,80% 1%,100% 21%,87% 43%,78% 38%,78% 100%,22% 100%,22% 38%,13% 43%,0 21%); background:linear-gradient(115deg,#c5e67d 0%,#e1f8a1 44%,#b7da67 100%); color:#26362b; font-size:.61rem; font-weight:850; letter-spacing:-.02em; line-height:1; }
 .player-kit::after { position:absolute; content:""; top:4px; left:50%; width:12px; height:7px; border-radius:0 0 9px 9px; background:#285344; transform:translateX(-50%); }
 .player-kit[data-position="GKP"] { background:linear-gradient(115deg,#8abebd 0%,#c1e6e1 44%,#84b8b6 100%); }
-.player-armband { position:absolute; z-index:2; top:2px; right:0; display:grid; place-items:center; min-width:23px; height:23px; padding-inline:3px; border:2px solid #183d33; border-radius:99px; background:#d5f28b; color:#15281d; font-size:.65rem; font-weight:900; line-height:1; box-shadow:0 2px 7px rgba(0,0,0,.3); }
+.player-armband { position:absolute; z-index:2; top:22px; right:0; display:grid; place-items:center; min-width:23px; height:23px; padding-inline:3px; border:2px solid #183d33; border-radius:99px; background:#d5f28b; color:#15281d; font-size:.65rem; font-weight:900; line-height:1; box-shadow:0 2px 7px rgba(0,0,0,.3); }
 .player-armband[data-kind="vice"] { background:#e4efea; color:#1c3540; font-size:.57rem; }
 .player-caption { position:relative; z-index:1; display:flex; flex:1 1 auto; width:100%; min-width:0; min-height:80px; flex-direction:column; justify-content:center; align-items:center; gap:.22rem; margin-top:.16rem; padding:.45rem .36rem .5rem; border:0; border-top:1px solid rgba(231,244,230,.25); border-radius:0; background:linear-gradient(180deg,rgba(9,27,33,.65),rgba(6,18,27,.97)); box-shadow:none; }
 .player-name { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; width:100%; overflow:hidden; color:#fff; font-size:clamp(.71rem,1.1vw,.89rem); font-weight:800; line-height:1.22; overflow-wrap:anywhere; }
@@ -240,17 +240,21 @@ html { scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
   .squad-pitch-key { gap: .5rem .9rem; font-size: .66rem; margin-bottom: .75rem; }
   .pitch-key-note { flex-basis: 100%; margin-left: 0; font-size: .53rem; }
   .key-badge { min-width: 21px; height: 21px; font-size: .6rem; }
-  .squad-pitch { min-height: 675px; padding: 1.15rem .28rem; gap: .6rem; }
+  .squad-pitch { min-height: 805px; padding: 1rem .28rem; gap: .6rem; }
   .squad-pitch::before { inset: 7px; }
   .squad-position-row { gap: .12rem; }
-  .squad-player { gap: .12rem; }
-  .player-visual { width: 56px; height: 57px; }
+  .squad-player { gap: 0; padding-top: .55rem; border-radius: 5px; }
+  .squad-player::before { top: 4px; left: 3px; min-width: 16px; padding: 2px; font-size: .44rem; }
+  .player-metric:first-child { top: 4px; right: 3px; min-width: 23px; padding: 2px; }
+  .player-metric:first-child .player-metric-key { font-size: .4rem; letter-spacing: 0; }
+  .player-metric:first-child .player-metric-value { font-size: .75rem; letter-spacing: -.025em; }
+  .player-visual { width: min(100%, 56px); height: 57px; margin-top: 1rem; }
   .player-kit-image { width: 100%; height: 100%; }
   .player-kit { width: 34px; height: 40px; padding-top: .24rem; font-size: .49rem; }
   .player-kit::after { top: 3px; width: 9px; height: 5px; }
-  .player-armband { top: 1px; right: 0; min-width: 19px; height: 19px; border-width: 1.5px; padding-inline: 2px; font-size: .54rem; }
+  .player-armband { top: 18px; right: 0; min-width: 19px; height: 19px; border-width: 1.5px; padding-inline: 2px; font-size: .54rem; }
   .player-armband[data-kind="vice"] { font-size: .46rem; }
-  .player-caption { min-height: 83px; gap: .18rem; padding: .34rem .14rem .36rem; border-radius: 4px; }
+  .player-caption { min-height: 86px; gap: .18rem; padding: .34rem .14rem .36rem; border-radius: 0; }
   .player-name { font-size: clamp(.59rem, 2.75vw, .76rem); line-height: 1.17; letter-spacing: -.025em; }
   .player-club { font-size: .54rem; line-height: 1.2; }
   .player-metrics { gap: .15rem; padding-top: .28rem; }
@@ -263,7 +267,7 @@ html { scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
   .squad-bench-slot > span { font-size: .52rem; letter-spacing: .02em; }
   .squad-bench .player-visual { width: 47px; height: 48px; }
   .squad-bench .player-kit { width: 32px; height: 37px; }
-  .squad-bench .player-caption { min-height: 80px; padding: .3rem .12rem .33rem; gap: .16rem; }
+  .squad-bench .player-caption { min-height: 84px; padding: .32rem .12rem .36rem; gap: .16rem; }
   .squad-bench .player-name { font-size: clamp(.58rem, 2.65vw, .72rem); }
   .squad-bench .player-club { font-size: .53rem; }
   .squad-message { padding: 1.25rem; font-size: .88rem; }
