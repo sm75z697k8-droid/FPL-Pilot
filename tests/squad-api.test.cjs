@@ -5,7 +5,7 @@ const path = require("node:path");
 let api;
 test.before(async () => { api = await import(pathToFileURL(path.resolve(__dirname, "../worker/squad-api.mjs")).href); });
 
-const clubs = [{ id: 1, short_name: "ARS" }, { id: 2, short_name: "LIV" }];
+const clubs = [{ id: 1, short_name: "ARS", code: 3 }, { id: 2, short_name: "LIV", code: 14 }];
 const elements = Array.from({ length: 15 }, (_, i) => ({
  id: i + 101, web_name: "Player " + (i+1), team: i%2 ? 1:2,
  element_type: i===0 || i===11 ? 1: i<6 ? 2 : i<11 ? 3 : 4
@@ -35,6 +35,8 @@ test("joins all 15 picks to real player metadata",()=>{
  assert.equal(result.squad.length,15);
  assert.equal(result.team.id,321);
  assert.equal(result.squad[0].role,"GKP");
+ assert.equal(result.squad[0].club_code,14);
+ assert.equal(result.squad[1].club_code,3);
  assert.equal(result.squad[5].captain,true);
  assert.equal(result.squad[7].vice_captain,true);
  assert.equal(result.squad[14].squad_slot,15);
@@ -49,4 +51,10 @@ test("rejects invented players and duplicate picks",()=>{
 test("rejects missing captains rather than guessing",()=>{
  const wrong={picks:picks.picks.map(x=>({...x,is_captain:false}))};
  assert.throws(()=>api.buildPublicSquad({name:"Team"},wrong,boot,event,321),/captain/);
+});
+
+test("missing or invalid FPL club code remains null so the UI shows its fallback",()=>{
+ const invalidBoot={...boot,teams:[{id:1,short_name:"ARS",code:"3"},{id:2,short_name:"LIV",code:null}]};
+ const result=api.buildPublicSquad({name:"Team"},picks,invalidBoot,event,321);
+ assert.ok(result.squad.every(p=>p.club_code===null));
 });
