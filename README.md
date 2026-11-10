@@ -29,6 +29,30 @@ vice-captain as reported by Fantasy Premier League.
   A user's private team state cannot be retrieved through the public endpoint.
 
 
+### Step 3.6 — Enhanced player cards
+
+Starting XI and bench cards now display two **official current-season FPL values**:
+
+- **PTS**: `elements[].total_points`, the player's season points so far, **not**
+  the selected gameweek score or a prediction
+- **£**: `elements[].now_cost / 10` in millions of pounds, the **current FPL
+  market price**, not the manager's historical purchase or selling price
+
+The read-only squad Worker passes these validated fields as `total_points`
+and `price_tenths`, from the **existing** `bootstrap-static` response. No new
+upstream API calls, personal data or account permissions were added. Missing
+or malformed values appear as an em dash; zero season points is valid.
+
+A restrained club-colour accent is purely decorative and uses verified club
+abbreviations with a neutral fallback. On narrow iPhones the price value
+appears next to a £ symbol in a two-row stat strip, preserving jersey
+visibility, player names, captaincy and the compact bench.
+
+Because published squad picks can be from an earlier gameweek, player
+season points and prices still reflect **current FPL bootstrap data**, not
+their values at the time of that historical pick. They may update when
+the upstream dataset refreshes.
+
 ### Step 3.5 — Sticky squad navigation
 
 After a verified squad has loaded, the Team / Starting XI / Bench navigation
