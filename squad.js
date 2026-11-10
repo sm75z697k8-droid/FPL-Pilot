@@ -121,6 +121,8 @@
     // The role is verified FPL data. The card's corner chip is decorative;
     // the same role remains available in the accessible text nameplate.
     card.dataset.role = player.role;
+    card.dataset.captaincy = player.captain ? "captain" :
+      player.vice_captain ? "vice" : "none";
 
     const visual = document.createElement("span");
     visual.className = "player-visual";
