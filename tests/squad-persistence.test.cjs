@@ -75,9 +75,9 @@ function setup(memory, fetcher = async () => ({ ok: true, json: async () => mock
     calls.push({ url, options });
     return fetcher(url, options);
   };
-  init();
+  const initialLoad = init();
   return {
-    nodes, calls,
+    nodes, calls, initialLoad,
     submit: async id => {
       nodes["team-id"].value = id;
       await nodes["squad-form"].events.submit({ preventDefault() {} });
@@ -143,7 +143,7 @@ test("successful lookup remembers ID, auto-loads on return, and allows change or
   try {
     assert.equal(second.calls.length, 1); // Auto-load from saved ID.
     assert.match(second.calls[0].url, /team=12345$/);
-    await new Promise(resolve => setImmediate(resolve));
+    await second.initialLoad;
     assert.equal(second.nodes["saved-team"].hidden, false);
     assert.equal(second.nodes["squad-data"].hidden, false);
     second.click("saved-team-forget");
