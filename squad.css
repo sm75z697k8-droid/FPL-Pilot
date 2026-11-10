@@ -99,13 +99,17 @@
 .player-visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
 .bench-head { margin-top:1.9rem; }
-.squad-bench { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); align-items:stretch; gap:.75rem; padding:.65rem; border:1px solid rgba(218,244,225,.14); border-radius:7px; background:#23363c; }
-.squad-bench-slot { display:flex; min-width:0; flex-direction:column; align-items:center; gap:.6rem; padding:.65rem .25rem .75rem; border:1px solid rgba(216,236,230,.09); border-radius:5px; background:rgba(18,34,39,.48); }
+/* Compact bench: the shared .squad-player flex-basis is a height inside a
+   column, so override it here to eliminate the tall blank card bottoms. */
+.squad-bench { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); align-items:stretch; gap:.55rem; padding:.55rem; border:1px solid rgba(218,244,225,.14); border-radius:7px; background:#23363c; }
+.squad-bench-slot { display:flex; min-width:0; flex-direction:column; align-items:center; gap:.45rem; padding:.6rem .25rem .7rem; border:1px solid rgba(216,236,230,.12); border-radius:5px; background:rgba(18,34,39,.48); }
 .squad-bench-slot > span { color:#b3c9c6; font-size:.59rem; font-weight:770; letter-spacing:.08em; }
-.squad-bench .squad-player { width:100%; }
-.squad-bench .player-visual { width:66px; height:64px; }
+.squad-bench .squad-player { flex:0 0 auto; width:100%; max-width:100%; gap:.12rem; }
+.squad-bench .player-visual { width:64px; height:61px; }
 .squad-bench .player-kit { width:44px; height:49px; }
-.squad-bench .player-caption { background:rgba(13,29,34,.9); }
+.squad-bench .player-caption { width:100%; min-height:52px; padding:.32rem .18rem; gap:.2rem; background:rgba(13,29,34,.9); }
+.squad-bench .player-name { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; overflow-wrap:anywhere; line-height:1.2; }
+.squad-bench .player-club { font-size:.62rem; }
 
 .squad-data-context { margin: 1.25rem 0 .5rem; color: #c0cfca; font-size: .88rem; line-height: 1.65; }
 .squad-fetched { margin: 0; color: #8ea3a6; font-size: .75rem; line-height: 1.55; }
@@ -162,10 +166,13 @@
   .player-club { font-size: .54rem; line-height: 1.2; }
   .bench-head { margin-top: 1.4rem; }
   .squad-bench { padding: .3rem; gap: .25rem; }
-  .squad-bench-slot { padding: .5rem .08rem .55rem; gap: .4rem; }
+  .squad-bench-slot { padding: .45rem .08rem .5rem; gap: .3rem; }
   .squad-bench-slot > span { font-size: .52rem; letter-spacing: .02em; }
   .squad-bench .player-visual { width: 47px; height: 48px; }
   .squad-bench .player-kit { width: 32px; height: 37px; }
+  .squad-bench .player-caption { min-height: 44px; padding: .26rem .1rem .3rem; gap: .16rem; }
+  .squad-bench .player-name { font-size: clamp(.58rem, 2.65vw, .72rem); }
+  .squad-bench .player-club { font-size: .53rem; }
   .squad-message { padding: 1.25rem; font-size: .88rem; }
 }
 @media (prefers-reduced-motion: reduce) {
