@@ -113,6 +113,7 @@
     shirt.className = "player-kit";
     shirt.dataset.position = player.role;
     shirt.textContent = player.role;
+    shirt.hidden = false;
     visual.append(shirt);
 
     const label = document.createElement("span");
