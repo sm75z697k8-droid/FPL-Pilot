@@ -99,11 +99,25 @@
     return `${FPL_SHIRT_BASE}shirt_${player.club_code}${suffix}-110.png`;
   }
 
+  function playerCardStats(player) {
+    // total_points and now_cost (here price_tenths) are official season values,
+    // not a current-gameweek score, projected score or purchase/selling price.
+    const points = Number.isInteger(player?.total_points) &&
+      player.total_points >= 0 && player.total_points <= 2000
+      ? String(player.total_points) : "—";
+    const price = Number.isInteger(player?.price_tenths) &&
+      player.price_tenths > 0 && player.price_tenths <= 1000
+      ? `£${(player.price_tenths / 10).toFixed(1)}m` : "—";
+    return { points, price };
+  }
+
   function createPlayer(player) {
     // Real official-hosted jerseys are displayed when provided by FPL.
     // A neutral position shirt remains when images are unavailable.
     const card = document.createElement("div");
     card.className = "squad-player";
+    // A visual accent only — never used to infer team data or player stats.
+    card.dataset.club = player.club;
 
     const visual = document.createElement("span");
     visual.className = "player-visual";
@@ -140,6 +154,26 @@
       description.textContent = player.captain ? "Captain" : "Vice captain";
       label.append(description);
     }
+    const values = playerCardStats(player);
+    const metrics = document.createElement("div");
+    metrics.className = "player-metrics";
+    for (const [shortLabel, value, fullLabel] of [
+      ["PTS", values.points, "Season total points"],
+      ["NOW", values.price, "Current FPL price"]
+    ]) {
+      const metric = document.createElement("span");
+      metric.className = "player-metric";
+      metric.setAttribute("aria-label", `${fullLabel}: ${value === "—" ? "unavailable" : value}`);
+      const key = document.createElement("span");
+      key.className = "player-metric-key";
+      key.textContent = shortLabel;
+      const number = document.createElement("strong");
+      number.className = "player-metric-value";
+      number.textContent = value;
+      metric.append(key, number);
+      metrics.append(metric);
+    }
+    label.append(metrics);
     // Keep captain badges visually above the jersey and avoid making an
     // external image a requirement for displaying the player.
     const imageUrl = officialKitUrl(player, player.role_id === 1);
@@ -383,7 +417,7 @@
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = { parseTeamId, validateSquad, createPlayer, renderStarting, renderBench,
-      readSavedTeamId, saveTeamId, forgetTeamId, officialKitUrl, init };
+      readSavedTeamId, saveTeamId, forgetTeamId, officialKitUrl, playerCardStats, init };
   }
   if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", init);
 })();
