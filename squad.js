@@ -157,13 +157,13 @@
     const values = playerCardStats(player);
     const metrics = document.createElement("div");
     metrics.className = "player-metrics";
-    for (const [shortLabel, value, fullLabel] of [
-      ["PTS", values.points, "Season total points"],
-      ["NOW", values.price, "Current FPL price"]
+    for (const [shortLabel, value, fullLabel, accessibleValue] of [
+      ["PTS", values.points, "Season total points", values.points],
+      ["£", values.price === "—" ? "—" : values.price.slice(1), "Current FPL price", values.price]
     ]) {
       const metric = document.createElement("span");
       metric.className = "player-metric";
-      metric.setAttribute("aria-label", `${fullLabel}: ${value === "—" ? "unavailable" : value}`);
+      metric.setAttribute("aria-label", `${fullLabel}: ${accessibleValue === "—" ? "unavailable" : accessibleValue}`);
       const key = document.createElement("span");
       key.className = "player-metric-key";
       key.textContent = shortLabel;
