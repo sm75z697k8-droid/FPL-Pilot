@@ -53,6 +53,24 @@
           <p>See your latest publicly published FPL lineup — exactly as recorded after a gameweek deadline. No projections, no invented players.</p>
         </div>
         <div class="squad-search">
+          <div class="saved-team" id="saved-team" hidden aria-labelledby="saved-team-heading">
+            <div class="saved-team-topline">
+              <span class="saved-team-eyebrow">YOUR SAVED TEAM</span>
+              <span class="saved-team-device"><span aria-hidden="true">●</span> THIS BROWSER</span>
+            </div>
+            <div class="saved-team-identity">
+              <span class="saved-team-symbol" aria-hidden="true">✓</span>
+              <div class="saved-team-info">
+                <h2 id="saved-team-heading">Your FPL squad</h2>
+                <p id="saved-team-id">FPL Team ID —</p>
+              </div>
+            </div>
+            <div class="saved-team-actions">
+              <button type="button" class="saved-team-reload" id="saved-team-reload">Reload squad <span aria-hidden="true">↻</span></button>
+              <button type="button" class="saved-team-change" id="saved-team-change" aria-controls="squad-form">Change team</button>
+            </div>
+            <button type="button" class="saved-team-forget" id="saved-team-forget">Forget saved Team ID on this device</button>
+          </div>
           <form id="squad-form" novalidate>
             <label for="team-id">YOUR FPL TEAM ID</label>
             <div class="squad-form-row">
@@ -61,7 +79,7 @@
             </div>
             <p id="team-id-help">Find your ID in the official FPL Points page URL: <code>…/entry/1234567/event/10</code></p>
           </form>
-          <div class="squad-privacy"><span aria-hidden="true">◎</span><span>Read-only public data. No FPL login, password, or account connection required.</span></div>
+          <div class="squad-privacy"><span aria-hidden="true">◎</span><span>Only your public Team ID is remembered in this browser when storage is available. No FPL login or password required.</span></div>
         </div>
       </section>
 
