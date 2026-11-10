@@ -93,3 +93,52 @@ test("bench retains four published players and substitute order", () => {
     assert.equal(slots[3].children[1].children[1].children[0].textContent, "Player 15");
   });
 });
+
+
+test("official FPL shirt URLs require a valid club code from the backend", () => {
+  const { officialKitUrl } = require("../squad.js");
+  assert.equal(officialKitUrl({ club_code: 3 }), "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_3-110.png");
+  assert.equal(officialKitUrl({ club_code: 3 }, true), "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_3_1-110.png");
+  for (const value of [null, undefined, "3", -2, 0, 10000, NaN]) {
+    assert.equal(officialKitUrl({ club_code: value }), null);
+  }
+});
+
+test("official club shirt loads, replaces illustrated shirt, then preserves the player caption", () => {
+  withDocument(() => {
+    const player = createPlayer({ ...players[1], club_code: 3 });
+    const [fallback, image] = player.children[0].children;
+    assert.equal(fallback.className, "player-kit");
+    assert.equal(image.className, "player-kit-image");
+    assert.equal(image.src, "https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_3-110.png");
+    assert.equal(image.hidden, true);
+    assert.equal(image.alt, "");
+    image.onload();
+    assert.equal(image.hidden, false);
+    assert.equal(fallback.hidden, true);
+    assert.equal(player.children[1].children[0].textContent, "Player 2");
+  });
+});
+
+test("unavailable official image keeps the original illustrated jersey", () => {
+  withDocument(() => {
+    const player = createPlayer({ ...players[1], club_code: 3 });
+    const [fallback, image] = player.children[0].children;
+    image.onerror();
+    assert.equal(image.hidden, true);
+    assert.equal(fallback.hidden, false);
+  });
+});
+
+test("goalkeepers try the official keeper variant then the home jersey", () => {
+  withDocument(() => {
+    const player = createPlayer({ ...players[0], club_code: 3 });
+    const [fallback, image] = player.children[0].children;
+    assert.match(image.src, /shirt_3_1-110\.png$/);
+    image.onerror();
+    assert.match(image.src, /shirt_3-110\.png$/);
+    image.onerror();
+    assert.equal(fallback.hidden, false);
+    assert.equal(image.hidden, true);
+  });
+});
