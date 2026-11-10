@@ -117,8 +117,8 @@ test("mobile layout retains compact bench and club accent while keeping five-pla
   assert.match(css, /\.squad-player\[data-club="ARS"\]/);
   assert.match(css, /\.squad-bench \.squad-player\s*\{\s*flex:0 0 auto/);
   assert.match(css, /\.player-metric-key\s*\{\s*font-size:\s*\.56rem/);
-  assert.match(css, /\.squad-pitch\s*\{\s*min-height:\s*675px/);
+  assert.match(css, /\.squad-pitch\s*\{\s*min-height:\s*805px/);
   assert.match(html, /PTS = SEASON TOTAL/);
-  assert.match(html, /squad\.css\?v=3\.6\.0/);
-  assert.match(html, /squad\.js\?v=3\.6\.0/);
+  assert.match(html, /squad\.css\?v=3\.7\.0/);
+  assert.match(html, /squad\.js\?v=3\.7\.0/);
 });
