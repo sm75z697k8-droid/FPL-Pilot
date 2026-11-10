@@ -108,9 +108,13 @@ test("club-accent frame stays compact on a five-player row, bench remains in ord
   assert.match(css, /\.squad-player::before\s*\{\s*content:attr\(data-role\)/);
   assert.match(css, /\.squad-player\[data-captaincy="captain"\]/);
   assert.match(css, /\.squad-bench \.squad-player\s*\{\s*flex:0 0 auto/);
-  assert.match(css, /\.squad-pitch\s*\{\s*min-height:\s*805px/);
-  assert.match(html, /squad\.css\?v=3\.7\.0/);
+  assert.match(css, /\.squad-pitch\s*\{\s*min-height:\s*635px/);
+  assert.match(html, /squad\.css\?v=3\.8\.0/);
   assert.match(html, /squad\.js\?v=3\.7\.0/);
+  assert.match(css, /grid-template-rows:repeat\(4,max-content\)/);
+  assert.match(css, /align-content:space-evenly/);
+  assert.match(css, /\.player-caption\s*\{[^}]*flex:0 0 auto/);
+  assert.match(css, /\.player-metrics\s*\{[^}]*margin-top:\.24rem/);
 });
 
 test("unavailable points are not guessed or replaced with a fictitious card rating", () => {
