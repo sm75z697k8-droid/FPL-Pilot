@@ -272,6 +272,13 @@ html { scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
   .squad-bench .player-club { font-size: .53rem; }
   .squad-message { padding: 1.25rem; font-size: .88rem; }
 }
+/* Very narrow phones: keep the short club/role line together on five-across
+   formations. The main iPhone layout at 390px keeps its normal type scale. */
+@media (max-width: 350px) {
+  .squad-pitch .player-club { font-size: .47rem; letter-spacing: -.05em; white-space: nowrap; }
+  .squad-pitch .player-name { font-size: .56rem; letter-spacing: -.035em; }
+  .squad-pitch .player-caption { padding-inline: .08rem; }
+}
 @media (prefers-reduced-motion: reduce) {
   .squad-form-row input, .squad-form-row button, .squad-section-links a { transition: none; }
 }
