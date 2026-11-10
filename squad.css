@@ -244,8 +244,8 @@ html { scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
   .player-club { font-size: .54rem; line-height: 1.2; }
   .player-metrics { gap: .15rem; padding-top: .28rem; }
   .player-metric { gap: .1rem; }
-  .player-metric-key { font-size: .46rem; letter-spacing: 0; }
-  .player-metric-value { font-size: clamp(.58rem, 2.65vw, .72rem); letter-spacing: -.05em; }
+  .player-metric-key { font-size: .56rem; letter-spacing: 0; }
+  .player-metric-value { font-size: clamp(.65rem, 2.8vw, .76rem); letter-spacing: -.045em; }
   .bench-head { margin-top: 1.4rem; }
   .squad-bench { padding: .3rem; gap: .25rem; }
   .squad-bench-slot { padding: .45rem .08rem .5rem; gap: .3rem; }
