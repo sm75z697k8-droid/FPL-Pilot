@@ -74,6 +74,9 @@ export function buildPublicSquad(entry, picksPayload, bootstrap, gameweek, teamI
       id: player.id,
       name: player.web_name,
       club: club.short_name,
+      // FPL's stable Premier League club code, used only to select the
+      // official public FPL shirt graphic on the client (not a guessed ID).
+      club_code: Number.isInteger(club.code) && club.code > 0 && club.code < 10000 ? club.code : null,
       role: position.singular_name_short,
       role_id: player.element_type,
       squad_slot: pick.position,
