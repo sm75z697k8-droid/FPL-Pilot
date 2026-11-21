@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "source": "https://fantasy.premierleague.com/api/bootstrap-static/",
-  "fetched_at": "2026-11-21T11:04:04.912925Z",
+  "source": "https://fantasy.premierleague.com/api/events/",
+  "fetched_at": "2026-11-21T11:59:36.754271Z",
   "events": [
     {
       "id": 1,
@@ -79,7 +79,7 @@
       "id": 10,
       "name": "Gameweek 10",
       "deadline_time": "2026-11-06T18:30:00Z",
-      "is_current": true,
+      "is_current": false,
       "is_next": false,
       "finished": true
     },
@@ -87,8 +87,8 @@
       "id": 11,
       "name": "Gameweek 11",
       "deadline_time": "2026-11-21T11:00:00Z",
-      "is_current": false,
-      "is_next": true,
+      "is_current": true,
+      "is_next": false,
       "finished": false
     },
     {
@@ -96,7 +96,7 @@
       "name": "Gameweek 12",
       "deadline_time": "2026-11-27T18:30:00Z",
       "is_current": false,
-      "is_next": false,
+      "is_next": true,
       "finished": false
     },
     {
