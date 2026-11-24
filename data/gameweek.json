@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "https://fantasy.premierleague.com/api/events/",
-  "fetched_at": "2026-11-24T12:17:46.549761Z",
+  "fetched_at": "2026-11-24T14:30:20.356337Z",
   "events": [
     {
       "id": 1,
@@ -89,7 +89,7 @@
       "deadline_time": "2026-11-21T11:00:00Z",
       "is_current": true,
       "is_next": false,
-      "finished": false
+      "finished": true
     },
     {
       "id": 12,
